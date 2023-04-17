@@ -33,9 +33,11 @@ async fn main() -> std::io::Result<()> {
 
     log4rs::init_file("log.yaml",Default::default()).unwrap();
 
+    let oap_endpoint = std::env::var("SW_AGENT_COLLECTOR_BACKEND_SERVICES").unwrap();
+
     /////////////////////////////////////////////////
     // Connect to skywalking oap server.
-    let reporter = GrpcReporter::connect("http://localhost:11800").await.unwrap();
+    let reporter = GrpcReporter::connect(oap_endpoint).await.unwrap();
     // Optional authentication, based on backend setting.
     //let reporter = reporter.with_authentication("<TOKEN>");
 
